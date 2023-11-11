@@ -38,7 +38,7 @@ const Landing: React.FunctionComponent = () => {
           <img src={logoImage} width={224} height={224} alt="logo" />
         </Box>
         <Box m={2}>
-          <Link underline="none" color="inherit" href="https://github.com/bugfloyd/aws-cognito-react">
+          <Link underline="none" color="inherit" href="https://github.com/bugfloyd/aws-cognito-react-revamped">
             <Grid container direction="row" justifyContent="center" alignItems="center">
               <Box mr={3}>
                 <GitHubIcon fontSize="large" />

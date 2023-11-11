@@ -1,26 +1,8 @@
-# aws-cognito-react - v2
+# AWS Cognito React - Revamped
 
 ![signin](./logo.png)
 
-If you are looking for v1 version it can be found on the legacy branch. With the release of v2, v1 is no longer supported
-
 Reference implementation / boilerplate for AWS Cognito user management
-
-## Demo
-
-[aws-cognito-react-demo](http://aws-cognito-react.s3-website-us-west-2.amazonaws.com/)
-
-## v2 Changes
-
-- Switched to Typescript
-- Replaced redux and saga's with react context
-- Upgraded all libraries to latest major versions
-- No security scan issues
-- Hooks used to manage states
-- Updated to Material UI 4x
-- Added AWS CDK to manage infrastructure
-- Cleaner and simpler Architecture
-- Responsive design
 
 ## AWS Cognito Infrastructure setup
 
@@ -43,8 +25,8 @@ After deployment copy the userPoolId and userPoolClientId values from the comman
 Setup the Cognito environment values buy creating app/.env.local file and adding the following
 
 ```bash
-REACT_APP_USERPOOL_ID=YOUR_USER_POOL_ID
-REACT_APP_CLIENT_ID=YOUR_CLIENT_ID
+VITE_COGNITO_USERPOOL_ID=YOUR_USER_POOL_ID
+VITE_COGNITO_CLIENT_ID=YOUR_CLIENT_ID
 ```
 
 Create React App has been used to setup the development process so the next steps should be familiar
@@ -52,7 +34,7 @@ Create React App has been used to setup the development process so the next step
 ```bash
 cd app
 npm install
-npm start
+npm dev
 ```
 
 ## Other Solutions
