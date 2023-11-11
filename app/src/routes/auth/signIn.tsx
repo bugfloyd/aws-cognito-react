@@ -1,30 +1,30 @@
 import React, { useState, useContext } from 'react'
 
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-import { makeStyles } from '@material-ui/core/styles'
-import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
+import { styled } from '@mui/material/styles'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import Paper from '@mui/material/Paper'
 
 import { useValidPassword, useValidUsername } from '../../hooks/useAuthHooks'
 import { Password, Username } from '../../components/authComponents'
 
 import { AuthContext } from '../../contexts/authContext'
 
-const useStyles = makeStyles({
-  root: {
+
+const FullHeightRoot = styled(Grid)({
     height: '100vh',
-  },
-  hover: {
+});
+
+const TypographyWithHover = styled(Typography)({
     '&:hover': { cursor: 'pointer' },
-  },
-})
+  });
+
 
 const SignIn: React.FunctionComponent<{}> = () => {
-  const classes = useStyles()
 
   const { username, setUsername, usernameIsValid } = useValidUsername('')
   const { password, setPassword, passwordIsValid } = useValidPassword('')
@@ -32,17 +32,17 @@ const SignIn: React.FunctionComponent<{}> = () => {
 
   const isValid = !usernameIsValid || username.length === 0 || !passwordIsValid || password.length === 0
 
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const authContext = useContext(AuthContext)
 
   const signInClicked = async () => {
     try {
       await authContext.signInWithEmail(username, password)
-      history.push('home')
+      navigate('/')
     } catch (err: any) {
       if (err.code === 'UserNotConfirmedException') {
-        history.push('verify')
+        navigate('verify')
       } else {
         setError(err.message)
       }
@@ -50,14 +50,14 @@ const SignIn: React.FunctionComponent<{}> = () => {
   }
 
   const passwordResetClicked = async () => {
-    history.push('requestcode')
+    navigate('/requestcode')
   }
 
   return (
-    <Grid className={classes.root} container direction="row" justify="center" alignItems="center">
-      <Grid xs={11} sm={6} lg={4} container direction="row" justify="center" alignItems="center" item>
+    <FullHeightRoot container direction="row" justifyContent="center" alignItems="center">
+      <Grid xs={11} sm={6} lg={4} container direction="row" justifyContent="center" alignItems="center" item>
         <Paper style={{ width: '100%', padding: 32 }}>
-          <Grid container direction="column" justify="center" alignItems="center">
+          <Grid container direction="column" justifyContent="center" alignItems="center">
             {/* Title */}
             <Box m={2}>
               <Typography variant="h3">Sign in</Typography>
@@ -70,11 +70,11 @@ const SignIn: React.FunctionComponent<{}> = () => {
             </Box>
             <Box width="80%" m={1}>
               <Password label="Password" passwordIsValid={passwordIsValid} setPassword={setPassword} />
-              <Grid container direction="row" justify="flex-start" alignItems="center">
+              <Grid container direction="row" justifyContent="flex-start" alignItems="center">
                 <Box onClick={passwordResetClicked} mt={2}>
-                  <Typography className={classes.hover} variant="body2">
+                  <TypographyWithHover variant="body2">
                     Forgot Password?
-                  </Typography>
+                  </TypographyWithHover>
                 </Box>
               </Grid>
             </Box>
@@ -88,9 +88,9 @@ const SignIn: React.FunctionComponent<{}> = () => {
 
             {/* Buttons */}
             <Box mt={2}>
-              <Grid container direction="row" justify="center">
+              <Grid container direction="row" justifyContent="center">
                 <Box m={1}>
-                  <Button color="secondary" variant="contained" onClick={() => history.goBack()}>
+                  <Button color="secondary" variant="contained" onClick={() => navigate(-1)}>
                     Cancel
                   </Button>
                 </Box>
@@ -102,16 +102,16 @@ const SignIn: React.FunctionComponent<{}> = () => {
               </Grid>
             </Box>
             <Box mt={2}>
-              <Box onClick={() => history.push('signup')}>
-                <Typography className={classes.hover} variant="body1">
+              <Box onClick={() => navigate('/signup')}>
+                <TypographyWithHover variant="body1">
                   Register a new account
-                </Typography>
+                </TypographyWithHover>
               </Box>
             </Box>
           </Grid>
         </Paper>
       </Grid>
-    </Grid>
+    </FullHeightRoot>
   )
 }
 

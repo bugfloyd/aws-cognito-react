@@ -1,46 +1,72 @@
-# Getting Started with Create React App
+# aws-cognito-react - v2
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![signin](./logo.png)
 
-## Available Scripts
+Reference implementation / boilerplate for AWS Cognito user management
 
-In the project directory, you can run:
+## Demo
 
-### `npm start`
+[aws-cognito-react-demo](http://aws-cognito-react.s3-website-us-west-2.amazonaws.com/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## v2 Changes
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Switched to Typescript
+- Replaced redux and saga's with react context
+- Upgraded all libraries to latest major versions
+- No security scan issues
+- Hooks used to manage states
+- Updated to Material UI 4x
+- Added AWS CDK to manage infrastructure
+- Cleaner and simpler Architecture
+- Responsive design
 
-### `npm test`
+## AWS Cognito Infrastructure setup
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To help deploy the AWS Cognito infrastructure I've create an Amazon Cloud Development (CDK) script
 
-### `npm run build`
+CDK set up instructions can be found [here](https://docs.aws.amazon.com/cdk/latest/guide/cli.html)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+CDK deploy instructions
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+cd cdk
+npm run cdk bootstrap   # only needed first time
+npm run cdk deploy
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+After deployment copy the userPoolId and userPoolClientId values from the command line window; you will need these values in the app config step
 
-### `npm run eject`
+## App Configuration
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Setup the Cognito environment values buy creating app/.env.local file and adding the following
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+VITE_COGNITO_USERPOOL_ID=YOUR_USER_POOL_ID
+VITE_COGNITO_CLIENT_ID=YOUR_CLIENT_ID
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Create React App has been used to setup the development process so the next steps should be familiar
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+cd app
+npm install
+npm dev
+```
 
-## Learn More
+## Other Solutions
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+[Firebase Auth](https://firebase.google.com/products/auth?gclid=Cj0KCQiAtqL-BRC0ARIsAF4K3WFgWD7NC4y4eJfdGZg68t4ovEoqpGrqWWk2kj1_htu5e2844DCBKVoaAhl_EALw_wcB) - Great for mobile and web. Fairly limited but easy to use. Integrates really nicely with other Firebase services
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+[Auth0](https://auth0.com/) - Comes with comprehensive and feature rich frontend. Seems to quicky get expensive but a very safe option
+
+[Keycloak](https://www.keycloak.org/) - Excellent feature rich Enterprise service that offers fully themable frontend. No Cloud solution but easy to deploy to AWS using [this](https://github.com/dbroadhurst/aws-cdk-fargate-keycloak) CDK script
+
+## Useful References
+
+<https://www.npmjs.com/package/amazon-cognito-identity-js>
+
+<https://docs.aws.amazon.com/cdk/api/latest/docs/aws-cognito-readme.html>
+
+<https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-social-idp.html>
+
+<https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html>

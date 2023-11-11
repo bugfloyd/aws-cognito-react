@@ -1,28 +1,24 @@
-import React, { useState, useContext } from 'react'
+import { useState, useContext } from 'react'
 
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-import { makeStyles } from '@material-ui/core/styles'
-import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
+import { styled } from '@mui/material/styles'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import Paper from '@mui/material/Paper'
 
 import { useValidPassword } from '../../hooks/useAuthHooks'
 import { Password } from '../../components/authComponents'
 
 import { AuthContext } from '../../contexts/authContext'
 
-const useStyles = makeStyles({
-  root: {
+const FullHeightDiv = styled(Grid)({
     height: '100vh',
-  },
-})
+  });
 
 export default function ChangePassword() {
-  const classes = useStyles()
-
   const [error, setError] = useState('')
   const [reset, setReset] = useState(false)
 
@@ -40,7 +36,7 @@ export default function ChangePassword() {
 
   const isValid = !oldPasswordIsValid || oldPassword.length === 0 || !newPasswordIsValid || newPassword.length === 0
 
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const authContext = useContext(AuthContext)
 
@@ -56,7 +52,7 @@ export default function ChangePassword() {
   const signOut = async () => {
     try {
       await authContext.signOut()
-      history.push('/')
+      navigate('/')
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message)
@@ -81,9 +77,9 @@ export default function ChangePassword() {
 
       {/* Buttons */}
       <Box mt={2}>
-        <Grid container direction="row" justify="center">
+        <Grid container direction="row" justifyContent="center">
           <Box m={1}>
-            <Button onClick={() => history.goBack()} color="secondary" variant="contained">
+            <Button onClick={() => navigate(-1)} color="secondary" variant="contained">
               Cancel
             </Button>
           </Box>
@@ -110,13 +106,13 @@ export default function ChangePassword() {
   )
 
   return (
-    <Grid className={classes.root} container direction="row" justify="center" alignItems="center">
-      <Grid xs={11} sm={6} lg={4} container direction="row" justify="center" alignItems="center" item>
+    <FullHeightDiv container direction="row" justifyContent="center" alignItems="center">
+      <Grid xs={11} sm={6} lg={4} container direction="row" justifyContent="center" alignItems="center" item>
         <Paper style={{ width: '100%', padding: 16 }}>
-          <Grid container direction="column" justify="center" alignItems="center">
+          <Grid container direction="column" justifyContent="center" alignItems="center">
             {/* Title */}
             <Box m={3}>
-              <Grid container direction="row" justify="center" alignItems="center">
+              <Grid container direction="row" justifyContent="center" alignItems="center">
                 <Typography variant="h3">Change Password</Typography>
               </Grid>
             </Box>
@@ -125,6 +121,6 @@ export default function ChangePassword() {
           </Grid>
         </Paper>
       </Grid>
-    </Grid>
+    </FullHeightDiv>
   )
 }

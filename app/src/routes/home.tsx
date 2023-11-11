@@ -1,70 +1,69 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-import { makeStyles } from '@material-ui/core/styles'
+import { styled } from '@mui/material/styles'
 
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
-import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
-import GitHubIcon from '@material-ui/icons/GitHub'
-import Link from '@material-ui/core/Link'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import GitHubIcon from '@mui/icons-material/GitHub'
+import Link from '@mui/material/Link'
 
-import logoImage from './logo.png'
+import logoImage from '/logo.png'
 
 import { AuthContext } from '../contexts/authContext'
 
-const useStyles = makeStyles((theme) => ({
-  root: {},
-  title: {
-    textAlign: 'center',
-  },
-  session: {
+const HeroBox = styled(Box)({
+    width: '100%',
+    background: 'rgb(220,220,220)',
+  });
+
+const SessionPre = styled('pre')({
     width: '80vw',
     overflow: 'auto',
     overflowWrap: 'break-word',
     fontSize: '16px',
-  },
-  hero: {
-    width: '100%',
-    background: 'rgb(220,220,220)',
-  },
-}))
+});
+
+const Title = styled(Typography)({
+    textAlign: 'center',
+  });
+
 
 export default function Home() {
-  const classes = useStyles()
 
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const auth = useContext(AuthContext)
 
   function signOutClicked() {
     auth.signOut()
-    history.push('/')
+    navigate('/')
   }
 
   function changePasswordClicked() {
-    history.push('changepassword')
+    navigate('changepassword')
   }
 
   return (
     <Grid container>
-      <Grid className={classes.root} container direction="column" justify="center" alignItems="center">
-        <Box className={classes.hero} p={4}>
-          <Grid className={classes.root} container direction="column" justify="center" alignItems="center">
+      <Grid container direction="column" justifyContent="center" alignItems="center">
+        <HeroBox p={4}>
+          <Grid container direction="column" justifyContent="center" alignItems="center">
             <Box m={2}>
               <img src={logoImage} width={224} height={224} alt="logo" />
             </Box>
             <Box m={2}>
               <Link underline="none" color="inherit" href="https://github.com/dbroadhurst/aws-cognito-react">
-                <Grid container direction="row" justify="center" alignItems="center">
+                <Grid container direction="row" justifyContent="center" alignItems="center">
                   <Box mr={3}>
                     <GitHubIcon fontSize="large" />
                   </Box>
-                  <Typography className={classes.title} variant="h3">
+                  <Title variant="h3">
                     AWS Cognito Starter Home
-                  </Typography>
+                  </Title>
                 </Grid>
               </Link>
             </Box>
@@ -79,14 +78,14 @@ export default function Home() {
               </Button>
             </Box>
           </Grid>
-        </Box>
+        </HeroBox>
         <Box m={2}>
           <Typography variant="h5">Session Info</Typography>
-          <pre className={classes.session}>{JSON.stringify(auth.sessionInfo, null, 2)}</pre>
+          <SessionPre>{JSON.stringify(auth.sessionInfo, null, 2)}</SessionPre>
         </Box>
         <Box m={2}>
           <Typography variant="h5">User Attributes</Typography>
-          <pre className={classes.session}>{JSON.stringify(auth.attrInfo, null, 2)}</pre>
+          <SessionPre>{JSON.stringify(auth.attrInfo, null, 2)}</SessionPre>
         </Box>
       </Grid>
     </Grid>

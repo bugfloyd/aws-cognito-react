@@ -1,51 +1,51 @@
 import React from 'react'
 
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-import { makeStyles } from '@material-ui/core/styles'
+import { styled } from '@mui/material/styles'
 
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
-import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
-import Link from '@material-ui/core/Link'
-import GitHubIcon from '@material-ui/icons/GitHub'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Link from '@mui/material/Link'
+import GitHubIcon from '@mui/icons-material/GitHub'
 
-import logoImage from './logo.png'
+import logoImage from '/logo.png'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+
+const FullHeightRoot = styled(Grid)({
     height: '100vh',
-  },
-  title: {
+});
+
+const Title = styled(Typography)({
     textAlign: 'center',
-  },
-}))
+  });
+
 
 const Landing: React.FunctionComponent = () => {
-  const classes = useStyles()
 
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const signIn = () => {
-    history.push('/signin')
+    navigate('/signin')
   }
 
   return (
     <Grid container>
-      <Grid className={classes.root} container direction="column" justify="center" alignItems="center">
+      <FullHeightRoot container direction="column" justifyContent="center" alignItems="center">
         <Box m={2}>
           <img src={logoImage} width={224} height={224} alt="logo" />
         </Box>
         <Box m={2}>
-          <Link underline="none" color="inherit" href="https://github.com/dbroadhurst/aws-cognito-react">
-            <Grid container direction="row" justify="center" alignItems="center">
+          <Link underline="none" color="inherit" href="https://github.com/bugfloyd/aws-cognito-react">
+            <Grid container direction="row" justifyContent="center" alignItems="center">
               <Box mr={3}>
                 <GitHubIcon fontSize="large" />
               </Box>
-              <Typography className={classes.title} variant="h3">
+              <Title variant="h3">
                 AWS Cognito Starter
-              </Typography>
+              </Title>
             </Grid>
           </Link>
         </Box>
@@ -54,7 +54,7 @@ const Landing: React.FunctionComponent = () => {
             SIGN IN
           </Button>
         </Box>
-      </Grid>
+      </FullHeightRoot>
     </Grid>
   )
 }

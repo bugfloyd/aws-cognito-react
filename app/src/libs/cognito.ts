@@ -1,8 +1,7 @@
 import { AuthenticationDetails, CognitoUser, CognitoUserAttribute, CognitoUserPool } from 'amazon-cognito-identity-js'
 
-const userPoolId = process.env.REACT_APP_USERPOOL_ID
-const clientId = process.env.REACT_APP_CLIENT_ID
-
+const userPoolId = import.meta.env.VITE_COGNITO_USERPOOL_ID; //process.env.REACT_APP_USERPOOL_ID
+const clientId = import.meta.env.VITE_COGNITO_CLIENT_ID; //process.env.REACT_APP_CLIENT_ID
 console.log(`userpool id=${userPoolId}`)
 console.log(`client id=${clientId}`)
 
@@ -129,7 +128,7 @@ export async function getAttributes() {
 
 export async function setAttribute(attribute: any) {
   return new Promise(function (resolve, reject) {
-    const attributeList = []
+    const attributeList: CognitoUserAttribute[] = []
     const res = new CognitoUserAttribute(attribute)
     attributeList.push(res)
 
